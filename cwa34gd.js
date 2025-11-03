@@ -59,8 +59,7 @@ function insertTableRows() {
             Varış zamanı:
         </td>
         <td>
-            <input id="arrivalTimeInput" type="text" placeholder="SS:DD:ss" style="width:70px">
-            <input id="arrivalMsInput" type="text" placeholder="MS" style="width:40px">
+            <input id="arrivalTimeInput" type="text" placeholder="SS:DD:ss:MS" style="width:100px">
             <a id="setButton" class="btn">Onayla</a>
             <span id="showArrTime"></span>
         </td>`;
@@ -96,15 +95,24 @@ function attachEventHandlers() {
                 }
                 
                 const timeInput = document.getElementById("arrivalTimeInput").value;
-                const msInput = document.getElementById("arrivalMsInput").value;
                 
                 if (!timeInput) {
                     alert("Lütfen varış zamanını girin");
                     return;
                 }
                 
-                input = timeInput;
-                inputMs = parseInt(msInput) || 0;
+                // Parse time input to separate seconds and milliseconds
+                const timeParts = timeInput.split(":");
+                if (timeParts.length < 3) {
+                    alert("Lütfen doğru formatta zaman girin (SS:DD:ss:MS)");
+                    return;
+                }
+                
+                // Extract milliseconds from the last part
+                inputMs = parseInt(timeParts[3]) || 0;
+                // Reconstruct time without milliseconds
+                input = timeParts.slice(0, 3).join(":");
+                
                 const parsedDelayTime = parseInt(delayTime) || 0;
                 delay = parsedDelayTime + inputMs;
                 if (isNaN(delay)) delay = 0;
