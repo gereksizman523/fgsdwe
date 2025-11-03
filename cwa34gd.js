@@ -1,3 +1,12 @@
+// ==UserScript==
+// @name 123
+// @description 123
+// @author You
+// @version 3.2.4
+// @license MIT
+// @include ***screen=place&try=confirm***
+// ==/UserScript==
+
 let inputMs = 0;
 let input;
 let delay = 0;
